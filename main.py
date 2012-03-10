@@ -18,6 +18,7 @@ def main():
         (r'/',handler.index.IndexHandler),
         (r'/product',handler.product.ProductHandler),
         (r'/material',handler.material.MaterialHandler),
+        (r'/materialList',handler.material.MaterialListHandler),
     ]
     application = tornado.web.Application(all_handler, **setting)
     server = tornado.httpserver.HTTPServer(application)
