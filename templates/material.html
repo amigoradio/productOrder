@@ -8,12 +8,12 @@
 <h1>录入原材料</h1>
 <a href="/">返回首页</a>
 <form action="material" method="POST">
-    <p>名称：<input type="text" autofocus="autofocus" required="required"/></p>
-    <p>价格：<input type="text" pattern="[0-9]+.[0-9]{0,2}" required="required"/>元</p>
-    <p>数量：<input type="number" min="0" required="required"/></p>
-    <p>尺寸：<input type="text" /></p>
-    <p>备注：<textarea></textarea></p>
-    <p>单价：<span></span><input type="hidden" /></p>
+    <p>名称：<input type="text" name="name" autofocus="autofocus" required="required"/></p>
+    <p>价格：<input type="text" name="sumPrice" pattern="[0-9]+.[0-9]{0,2}" required="required"/>元</p>
+    <p>数量：<input type="number" name="sumNum" min="0" required="required"/></p>
+    <p>尺寸：<input type="text" name="size"/></p>
+    <p>备注：<textarea name="description"></textarea></p>
+    <p>单价：<span></span></p>
     <input type="submit" />
 </form>
 </body>
