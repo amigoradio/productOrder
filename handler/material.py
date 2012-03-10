@@ -1,8 +1,10 @@
-__author__ = 'maxfirecomic'
 #coding=utf-8
 
-import tornado.web
+from index import BaseHandler
 
-class MaterialHandler(tornado.web.RequestHandler):
+class MaterialHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        self.write("material")
+        self.render('material.html')
+
+    def post(self, *args, **kwargs):
+        self.redirect('/material')

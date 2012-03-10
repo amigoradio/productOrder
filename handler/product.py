@@ -1,8 +1,7 @@
-__author__ = 'maxfirecomic'
 #coding=utf-8
 
-import tornado.web
+from index import BaseHandler
 
-class ProductHandler(tornado.web.RequestHandler):
+class ProductHandler(BaseHandler):
     def get(self, *args, **kwargs):
         self.write("product")
