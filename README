@@ -1,0 +1,14 @@
+淘宝记帐服务
+
+目的：
+    为amigoshaw.taobao.com记录交易信息，计算原料使用情况，商品的成本，订单的信息。
+    练习使用tornado和mongodb来进行开发
+    练习使用html5进行开发
+    该项目可以做为学习tornado，mongodb，html5的例子，希望能对你有帮助。
+
+未来：
+    会迁移至SAE或GAE
+    会适配ios，android，wp等多种终端
+
+注：
+    需求整理在wiki中
