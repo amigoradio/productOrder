@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>录入原材料</title>
+</head>
+<body>
+<h1>录入原材料</h1>
+<form action="material" method="POST">
+    <p>名称：<input type="text" autofocus="autofocus" required="required"/></p>
+    <p>进货价格：<input type="text" pattern="[0-9]+.[0-9]{0,2}" required="required"/>元</p>
+    <p>进货数量：<input type="number" min="0" required="required"/></p>
+    <p>尺寸：<input type="text" /></p>
+    <p>备注：<textarea></textarea></p>
+    <p>单价：<span></span><input type="hidden" /></p>
+    <input type="submit" />
+</form>
+</body>
+</html>
