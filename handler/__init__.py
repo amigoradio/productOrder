@@ -1,1 +1,1 @@
-__author__ = 'maxfirecomic'
+#coding=utf-8
