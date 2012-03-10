@@ -7,4 +7,8 @@ class MaterialHandler(BaseHandler):
         self.render('material.html')
 
     def post(self, *args, **kwargs):
-        self.redirect('/material')
+        self.redirect('/materialList')
+
+class MaterialListHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        self.render('materialList.html')
