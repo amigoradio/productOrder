@@ -5,7 +5,7 @@
     <title>原材料列表</title>
 </head>
 <body>
-<a href="/material">录入原料</a>
+<a href="/material/">录入原料</a>
 <a href="/">返回首页</a>
 <table border="1">
     <tr>
@@ -15,6 +15,8 @@
         <th>尺寸</th>
         <th>单价</th>
         <th>备注</th>
+        <th>功能a</th>
+        <th>功能b</th>
     </tr>
     {% for entry in entries %}
     <tr>
@@ -24,6 +26,8 @@
         <td>{{ entry.get('size') }}</td>
         <td>{{ entry.get('unitPrice') }}元</td>
         <td>{{ entry.get('description') }}</td>
+        <td><a href="/materialDel/{{ entry.get('_id') }}">删除</a></td>
+        <td><a href="/material/{{ entry.get('_id') }}">查看</a></td>
     </tr>
     {% end %}
 </table>

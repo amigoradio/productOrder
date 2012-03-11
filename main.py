@@ -20,9 +20,10 @@ def main():
     tornado.options.parse_command_line()
     all_handler = [
         (r'/',handler.index.IndexHandler,dict(db=db)),
-        (r'/product',handler.product.ProductHandler,dict(db=db)),
-        (r'/material',handler.material.MaterialHandler,dict(db=db)),
+        (r'/product$',handler.product.ProductHandler,dict(db=db)),
+        (r'/material/(\w*)',handler.material.MaterialHandler,dict(db=db)),
         (r'/materialList',handler.material.MaterialListHandler,dict(db=db)),
+        (r'/materialDel/(\w+)',handler.material.MaterialDelHandler,dict(db=db)),
     ]
     application = tornado.web.Application(all_handler, **setting)
     server = tornado.httpserver.HTTPServer(application)
