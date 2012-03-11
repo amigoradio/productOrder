@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>商品列表</title>
+</head>
+<body>
+<a href="/product/">录入商品</a>
+<a href="/">返回首页</a>
+<table border="1">
+    <tr>
+        <th>名称</th>
+        <th>销售价格</th>
+        <th>成本价格</th>
+        <th>备注</th>
+        <th>功能a</th>
+        <th>功能b</th>
+    </tr>
+    {% for entry in entries %}
+    <tr>
+        <td>{{ entry.get('name') }}</td>
+        <td>{{ entry.get('salePrice') }}元</td>
+        <td>{{ entry.get('realPrice') }}元</td>
+        <td>{{ entry.get('description') }}</td>
+        <td><a href="/productDel/{{ entry.get('_id') }}">删除</a></td>
+        <td><a href="/product/{{ entry.get('_id') }}">查看</a></td>
+    </tr>
+    {% end %}
+</table>
+</body>
+</html>

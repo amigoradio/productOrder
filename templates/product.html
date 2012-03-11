@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<script>
+
+    var mArray = [];
+
+    function addMaterial(){
+       var sel_id = document.getElementById("sel_id");
+       var sel_number = document.getElementById("sel_number");
+       var materialDiv = document.getElementById("materialDiv");
+       var idIndex = sel_id.selectedIndex;
+       var mId = sel_id.options[idIndex].value;
+       var optionValue = sel_id.options[idIndex].text;
+       var mName = optionValue.split(" - ")[0];
+       var mPrice = optionValue.split(" - ")[1];
+       var mNumber = sel_number.options[sel_number.selectedIndex].value;
+       var mNumberValue = sel_number.options[sel_number.selectedIndex].text;
+       materialDiv.innerHTML += "原料："+mName+" 价格："+mPrice+" 用料："+mNumberValue+" <br/>";
+
+        calculateRealPrice(mNumber,mPrice.substring(0,mPrice.length-1));
+        mArray.push("{'mId':"+mId+",'mNumber':"+mNumber+"}");
+        materialToForm();
+    }
+
+    function calculateRealPrice(number,price){
+        var realPriceSpan = document.getElementById("realPrice");
+//        alert("price="+1.0/parseInt(number)*parseFloat(price));
+        var oldPrice = parseFloat(realPriceSpan.innerHTML);
+        var newPrice = oldPrice + 1.0/parseInt(number)*parseFloat(price);
+        realPriceSpan.innerHTML = Math.round(newPrice*100)/100
+    }
+
+    function materialToForm(){
+        var needMaterial = document.getElementById("needMaterial");
+        var str = "[";
+        for(i=0;i<mArray.length;i++){
+                str += mArray[i] + ",";
+        }
+        str = str.substring(0,str.length-1) + "]";
+        needMaterial.value = str;
+    }
+</script>
+<head>
+    <title>录入商品</title>
+</head>
+<body>
+<h1>录入商品</h1>
+<a href="/">返回首页</a>
+<form action="/product/{{ entry.get('_id','') }}" method="POST">
+    <p>名称：<input type="text" name="name" value="{{ entry.get('name','') }}" autofocus="autofocus" required="required"/></p>
+    <p>销售价格：<input type="text" name="salePrice" value="{{ entry.get('salePrice',0) }}" min="0" required="required"/>元</p>
+    <p>成本价格：<span id="realPrice">{{ round(entry.get('realPrice',0),2) }}</span>元</p>
+    <p>备注：<textarea name="description">{{ entry.get('description','') }}</textarea></p>
+    <input type="text" id="needMaterial" name="needMaterial" />
+    <input type="submit" value="确定"/>
+</form>
+<div id="materialDiv"></div>
+<hr>
+<p>原料名称：</p>
+<select id="sel_id">
+    <option value="0">请选择</option>
+    {% for material in materials %}
+        <option value="{{ material.get('_id','') }}">
+            {{ material.get('name','') }} - {{ round(material.get('unitPrice','0'),2) }}元
+        </option>
+    {% end %}
+</select>
+<p>原料用量：</p>
+<select id="sel_number">
+    <option value="0">请选择</option>
+    {% for number in range(1,10) %}
+        <option value="{{ number }}">{% if number == 1 %}1{% else %}1/{{ number }}{% end %}</option>
+    {% end %}
+</select>
+<a href="javascript:void(0)" onclick="javascript:addMaterial()">添加</a>
+<hr>
+</body>
+</html>
