@@ -7,7 +7,8 @@
 import tornado.web
 
 class BaseHandler(tornado.web.RequestHandler):
-    pass
+    def initialize(self,db):
+        self.db = db
 
 class IndexHandler(BaseHandler):
     def get(self, *args, **kwargs):
