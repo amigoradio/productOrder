@@ -16,14 +16,16 @@
         <th>单价</th>
         <th>备注</th>
     </tr>
+    {% for entry in entries %}
     <tr>
-        <td>拉锁</td>
-        <td>10元</td>
-        <td>10</td>
-        <td>15x15</td>
-        <td>1元</td>
-        <td>很便宜啦</td>
+        <td>{{ entry.get('name') }}</td>
+        <td>{{ entry.get('sumPrice') }}元</td>
+        <td>{{ entry.get('sumNum') }}</td>
+        <td>{{ entry.get('size') }}</td>
+        <td>{{ entry.get('unitPrice') }}元</td>
+        <td>{{ entry.get('description') }}</td>
     </tr>
+    {% end %}
 </table>
 </body>
 </html>
