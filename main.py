@@ -6,9 +6,10 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 import tornado.options
-import handler.product
-import handler.material
-import handler.index
+from handler.index import *
+from handler.productOrder import *
+from handler.product import *
+from handler.material import *
 from tornado.options import define,options
 from setting import *
 from pymongo import Connection
@@ -30,13 +31,16 @@ db.add_son_manipulator(AutoReference(db))
 def main():
     tornado.options.parse_command_line()
     all_handler = [
-        (r'/',handler.index.IndexHandler,dict(db=db)),
-        (r'/product/(\w*)',handler.product.ProductHandler,dict(db=db)),
-        (r'/productList',handler.product.ProductListHandler,dict(db=db)),
-        (r'/productDel/(\w+)',handler.product.ProductDelHandler,dict(db=db)),
-        (r'/material/(\w*)',handler.material.MaterialHandler,dict(db=db)),
-        (r'/materialList',handler.material.MaterialListHandler,dict(db=db)),
-        (r'/materialDel/(\w+)',handler.material.MaterialDelHandler,dict(db=db)),
+        (r'/',IndexHandler,dict(db=db)),
+        (r'/order/(\w*)',OrderHandler,dict(db=db)),
+        (r'/orderList',OrderListHandler,dict(db=db)),
+        (r'/orderDel/(\w+)',OrderDelHandler,dict(db=db)),
+        (r'/product/(\w*)',ProductHandler,dict(db=db)),
+        (r'/productList',ProductListHandler,dict(db=db)),
+        (r'/productDel/(\w+)',ProductDelHandler,dict(db=db)),
+        (r'/material/(\w*)',MaterialHandler,dict(db=db)),
+        (r'/materialList',MaterialListHandler,dict(db=db)),
+        (r'/materialDel/(\w+)',MaterialDelHandler,dict(db=db)),
     ]
     setting['ui_modules']={"realPrice":RealPriceModule,"productMaterials":ProductMaterials}
     application = tornado.web.Application(all_handler, **setting)
