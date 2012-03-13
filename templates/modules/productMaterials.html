@@ -1,0 +1,9 @@
+{% for entry in entries %}
+{% set number = entry.get('mNumber',0) %}
+{% set material = entry.get('material') %}
+原料名称：{{ material.get('name') }}
+价格：{{ round(material.get('unitPrice',0),2) }}元
+尺寸：{{ material.get('size') }}
+原料描述：{{ material.get('description') }}
+用料：{% if number == 1 %}1{% else %}1/{{ number }}{% end %}<br/>
+{% end %}
