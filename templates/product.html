@@ -27,6 +27,7 @@
         var realPriceSpan = document.getElementById("realPrice");
 //        alert("price="+1.0/parseInt(number)*parseFloat(price));
         var oldPrice = parseFloat(realPriceSpan.innerHTML);
+        alert("oldPrice=",realPriceSpan.innerHTML);
         var newPrice = oldPrice + 1.0/parseInt(number)*parseFloat(price);
         realPriceSpan.innerHTML = Math.round(newPrice*100)/100
     }
@@ -50,12 +51,12 @@
 <form action="/product/{{ entry.get('_id','') }}" method="POST">
     <p>名称：<input type="text" name="name" value="{{ entry.get('name','') }}" autofocus="autofocus" required="required"/></p>
     <p>销售价格：<input type="text" name="salePrice" value="{{ entry.get('salePrice',0) }}" min="0" required="required"/>元</p>
-    <p>成本价格：<span id="realPrice">{{ round(entry.get('realPrice',0),2) }}</span>元</p>
+    <p>成本价格：<span id="realPrice">{% module realPrice(entry.get('materials')) %}</span>元</p>
     <p>备注：<textarea name="description">{{ entry.get('description','') }}</textarea></p>
-    <input type="text" id="needMaterial" name="needMaterial" />
+    <input type="text" id="needMaterial" vaule="" name="needMaterial" />
     <input type="submit" value="确定"/>
 </form>
-<div id="materialDiv"></div>
+<div id="materialDiv">{% module productMaterials(entry.get('materials')) %}</div>
 <hr>
 <p>原料名称：</p>
 <select id="sel_id">
