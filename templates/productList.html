@@ -3,6 +3,16 @@
 <html>
 <head>
     <title>商品列表</title>
+    <script type="text/javascript">
+        function showMaterialList(spanId){
+            var materialList = document.getElementById('span_'+spanId);
+            if(materialList.style.display == 'none'){
+                materialList.style.display = 'block';
+            }else{
+                materialList.style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
 <a href="/product/">录入商品</a>
@@ -15,16 +25,19 @@
         <th>备注</th>
         <th>功能a</th>
         <th>功能b</th>
+        <th></th>
     </tr>
     {% for entry in entries %}
     <tr>
         <td>{{ entry.get('name') }}</td>
         <td>{{ entry.get('salePrice') }}元</td>
-        <td>元</td>
+        <td>{% module realPrice(entry.get('materials')) %}元</td>
         <td>{{ entry.get('description') }}</td>
         <td><a href="/productDel/{{ entry.get('_id') }}">删除</a></td>
-        <td><a href="/product/{{ entry.get('_id') }}">查看</a></td>
+        <td><a href="/product/{{ entry.get('_id') }}">编辑</a></td>
+        <td><a href="javascript:void(0)" onclick="showMaterialList('{{ entry.get('_id') }}')">查看</a></td>
     </tr>
+    <span id="span_{{ entry.get('_id') }}" style="display:none;">{% module productMaterials(entry.get('materials')) %}</span>
     {% end %}
 </table>
 </body>

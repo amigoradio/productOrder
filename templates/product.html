@@ -19,7 +19,7 @@
        materialDiv.innerHTML += "原料："+mName+" 价格："+mPrice+" 用料："+mNumberValue+" <br/>";
 
         calculateRealPrice(mNumber,mPrice.substring(0,mPrice.length-1));
-        mArray.push("{'mId':"+mId+",'mNumber':"+mNumber+"}");
+        mArray.push("{'mId':'"+mId+"','mNumber':"+mNumber+"}");
         materialToForm();
     }
 
