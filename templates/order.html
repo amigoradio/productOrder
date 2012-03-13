@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function addPostPrice(){
+            alert("addPostPrice")
+            var postPrice = document.getElementById("postPrice");
+            var sel_post = document.getElementById("sel_post");
+            postPrice.value = sel_post.options[sel_post.selectedIndex].value;
+        }
+
+        function addProduct(){
+            var sel_product = document.getElementById("sel_product");
+            var productDiv = document.getElementById("productDiv");
+            var productNumber = document.getElementById("productNumber").value;
+            var preferentialPrice = document.getElementById("preferentialPrice").value;
+            var product = sel_product.options[sel_product.selectedIndex].value;
+            var productProperty = product.split("|");
+            productDiv.innerHTML += "商品:"+productProperty[1]+" 销售价格:"+productProperty[2]+
+                    "元 成本价格:"+productProperty[3]+"元 数量:"+productNumber+"件 优惠价格:"+
+                    preferentialPrice+"元 <br/>";
+
+            calculateOrderPrice();
+        }
+
+        function calculateOrderPrice(){
+
+        }
+    </script>
+    <title>录入订单</title>
+</head>
+<body>
+<h1>录入订单</h1>
+<a href="/">返回首页</a>
+<form action="/order/" method="POST">
+    <p>快递费：</p>
+    <select id="sel_post" onchange="javascript:addPostPrice()">
+        <option value="0">请选择</option>
+        {% for number in range(1,20) %}
+        <option value="{{ number }}">{{ number }}</option>
+        {% end %}
+    </select>元
+    <input type="hidden" id="postPrice" name="postPrice"/>
+    <p>销售额：<input type="text" id="salePrice" name="salePrice" readonly required="required"/>元</p>
+    <p>成本价格：<input type="text" id="realPrice" name="realPrice" readonly required="required">元</p>
+    <p>利润：<input type="text" id="profit" name="profit" readonly required="required">元</p>
+    <p>备注：<textarea name="description"></textarea></p>
+    <input type="submit" value="确定"/>
+</form>
+<div id="productDiv"></div>
+<hr>
+<p>商品名称：</p>
+<select id="sel_product">
+    <option value="0">请选择</option>
+    {% for product in products %}
+    <option value="{{ product.get('_id','') }}|
+    {{ product.get('name','') }}|
+    {{ product.get('salePrice',0) }}|
+    {% module realPrice(product.get('materials')) %}">
+        {{ product.get('name','') }} - {{ product.get('salePrice',0) }}元
+    </option>
+    {% end %}
+</select>
+<p>商品数量：</p>
+<input type="number" min="1" id="productNumber" value="1" required="required"/>
+<p>优惠价格：</p>
+<input type="number" min="0" id="preferentialPrice" value="0" required="required"/>元
+<a href="javascript:void(0)" onclick="javascript:addProduct()">添加</a>
+</body>
+</html>
