@@ -18,11 +18,17 @@ class ProductHandler(BaseHandler):
         name = self.get_argument('name')
         salePrice = self.get_argument('salePrice')
         description = self.get_argument('description')
-        material = self.get_argument('needMaterial')
+        needMaterial = self.get_argument('needMaterial')
+        if  needMaterial:
+            materials = eval(needMaterial)
+        mList = []
+        for m in materials:
+            m['material'] = self.db.material.find_one(ObjectId(m['mId']))
+            del m['mId']
         posts = {'name':name,
                  'salePrice':salePrice,
                  'description':description,
-                 'material':material,
+                 'materials':materials,
                  }
         if product_id:
             posts['_id'] = ObjectId(product_id)
