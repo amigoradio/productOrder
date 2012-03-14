@@ -20,10 +20,18 @@ class OrderHandler(BaseHandler):
         self.render('order.html',entry=entry,products=products)
 
     def post(self,order_id):
-        name = self.get_argument('name')
+        postPrice = self.get_argument('postPrice')
+        salePrice = self.get_argument('salePrice')
+        realPrice = self.get_argument('realPrice')
+        profit = self.get_argument('profit')
         description = self.get_argument('description')
-        posts = {'name':name,
+        products = self.get_argument('products')
+        posts = {'postPrice':postPrice,
+                 'salePrice':salePrice,
+                 'realPrice':realPrice,
+                 'profit':profit,
                  'description':description,
+                 'products':eval(products),
                  }
         if order_id:
             posts['_id'] = ObjectId(order_id)

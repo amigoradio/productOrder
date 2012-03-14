@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>订单列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript">
+        function showProductList(spanId){
+            var productList = document.getElementById('span_'+spanId);
+            if(productList.style.display == 'none'){
+                productList.style.display = 'block';
+            }else{
+                productList.style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
-<div>总销售额：总利润：订单数量：笔</div>
-<hr>
 <a href="/order/">录入订单</a>
 <a href="/">返回首页</a>
 <table border="1">
@@ -19,6 +27,35 @@
         <th>功能a</th>
         <th>功能b</th>
     </tr>
+    {% set sumSalePrice = 0 %}
+    {% set sumProfit = 0 %}
+    {% for entry in entries %}
+    {% set sumSalePrice = sumSalePrice + int(entry.get('salePrice',0)) %}
+    {% set sumProfit = sumProfit + float(entry.get('profit',0)) %}
+    <tr>
+        <td>NO:{{ entry.get('_id') }}</td>
+        <td>{{ entry.get('salePrice') }}元</td>
+        <td>{{ entry.get('profit') }}元</td>
+        <td>{{ entry.get('postPrice') }}元</td>
+        <td>{{ entry.get('description') }}</td>
+        <td><a href="/orderDel/{{ entry.get('_id') }}">删除</a></td>
+        <td><a href="javascript:void(0)" onclick="showProductList('{{ entry.get('_id') }}')">查看</a></td>
+    </tr>
+    <span id="span_{{ entry.get('_id') }}" style="display:none;">
+        {% set products = entry.get('products') %}
+        {% for product in products %}
+        商品：{{ product.get('name') }}
+        销售价格：{{ product.get('salePrice',0) }}元
+        成本价格：{{ product.get('realPrice') }}元
+        数量：{{ product.get('number') }}件
+        优惠价格：{{ product.get('preferentialPrice') }}元<br/>
+        <br/>
+        {% end %}
+    </span>
+    {% end %}
 </table>
+<hr>
+<div>总销售额:{{ sumSalePrice }}元 总利润:{{ sumProfit }}元 订单数量:{% set l = entries.count() %}{{ l }}笔</div>
+
 </body>
 </html>

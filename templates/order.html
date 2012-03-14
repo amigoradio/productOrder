@@ -2,8 +2,9 @@
 <html>
 <head>
     <script>
+        var productArray = [];
+
         function addPostPrice(){
-            alert("addPostPrice")
             var postPrice = document.getElementById("postPrice");
             var sel_post = document.getElementById("sel_post");
             postPrice.value = sel_post.options[sel_post.selectedIndex].value;
@@ -19,12 +20,34 @@
             productDiv.innerHTML += "商品:"+productProperty[1]+" 销售价格:"+productProperty[2]+
                     "元 成本价格:"+productProperty[3]+"元 数量:"+productNumber+"件 优惠价格:"+
                     preferentialPrice+"元 <br/>";
+            productArray.push("{'name':'"+productProperty[1]+"','salePrice':"+productProperty[2]+
+                    ",'realPrice':"+productProperty[3]+",'number':"+productNumber+
+                    ",'preferentialPrice':"+preferentialPrice+"}");
 
-            calculateOrderPrice();
+            var sprice = parseInt(productProperty[2]) * parseInt(productNumber);
+            var rprice = parseFloat(productProperty[3]) * parseInt(productNumber);
+            calculateOrderPrice(sprice,rprice);
+
+            addProductToForm();
         }
 
-        function calculateOrderPrice(){
+        function calculateOrderPrice(salePrice,realPrice){
+            var salePriceInput = document.getElementById("salePrice");
+            var realPriceInput = document.getElementById("realPrice");
+            salePriceInput.value = parseInt(salePriceInput.value) + salePrice;
+            realPriceInput.value = parseFloat(realPriceInput.value) + realPrice;
+            var profit = document.getElementById("profit");
+            profit.value = salePriceInput.value - realPriceInput.value;
+        }
 
+        function addProductToForm(){
+            var products = document.getElementById("products");
+            var str = "[";
+            for(i=0;i<productArray.length;i++){
+                str += productArray[i] + ",";
+            }
+            str = str.substring(0,str.length-1) + "]";
+            products.value = str;
         }
     </script>
     <title>录入订单</title>
@@ -41,10 +64,11 @@
         {% end %}
     </select>元
     <input type="hidden" id="postPrice" name="postPrice"/>
-    <p>销售额：<input type="text" id="salePrice" name="salePrice" readonly required="required"/>元</p>
-    <p>成本价格：<input type="text" id="realPrice" name="realPrice" readonly required="required">元</p>
-    <p>利润：<input type="text" id="profit" name="profit" readonly required="required">元</p>
+    <p>销售额：<input type="text" id="salePrice" name="salePrice" value="0" readonly required="required"/>元</p>
+    <p>成本价格：<input type="text" id="realPrice" name="realPrice" value="0" readonly required="required">元</p>
+    <p>利润：<input type="text" id="profit" name="profit" value="0" readonly required="required">元</p>
     <p>备注：<textarea name="description"></textarea></p>
+    <input type="text" name="products" id="products" required="required"/>
     <input type="submit" value="确定"/>
 </form>
 <div id="productDiv"></div>
